@@ -4,8 +4,8 @@ Clj-kondo configurations for libraries, as dependencies.
 
 ## Including configuration with your own libraries
 
-It is preferred that configurations for libraries are part of those libraries
-proper. Read
+To give users the best out of the box experience, it is preferred that
+configurations for libraries are part of those libraries proper. Read
 [here](https://github.com/clj-kondo/clj-kondo/blob/master/doc/config.md#exporting-and-importing-configuration)
 how you can do that. Also see a list of projects
 [here](https://github.com/clj-kondo/clj-kondo/issues/1383) that are already
@@ -32,6 +32,9 @@ $ clj-kondo --lint $(clojure -Spath) --dependencies --skip-lint --copy-configs
 and clj-kondo will copy configurations from the dependencies to your local
 `.clj-kondo` directory. For leiningen, replace `clojure -Spath` with `lein
 classpath`.
+
+If you are using [clojure-lsp](https://github.com/clojure-lsp/clojure-lsp/) the
+above will happen automatically.
 
 It is fine to check those configurations into source control if you want to, so
 everyone who is linting your code with clj-kondo, will get to see the same
