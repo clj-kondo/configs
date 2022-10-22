@@ -2,13 +2,22 @@
 
 Clj-kondo configurations for libraries, as dependencies.
 
-## Gettings configurations
+## Including configuration with your own libraries
+
+It is preferred that configurations for libraries are part of those libraries
+proper. Read
+[here](https://github.com/clj-kondo/clj-kondo/blob/master/doc/config.md#exporting-and-importing-configuration)
+how you can do that. Also see a list of projects
+[here](https://github.com/clj-kondo/clj-kondo/issues/1383) that are already
+currently doing that.
+
+## Gettings configurations from this repo
 
 You can get configurations for your libraries, if they are available in this
 repo, by adding dependencies to your `deps.edn` or `project.clj`. E.g. to add a
 configuration for Rum:
 
-```
+``` clojure
 {:deps {io.github.clj-kondo/config-rum-rum {:mvn/version "<version>"}}}
 ```
 
@@ -21,7 +30,8 @@ $ clj-kondo --lint $(clojure -Spath) --dependencies --skip-lint --copy-configs
 ```
 
 and clj-kondo will copy configurations from the dependencies to your local
-`.clj-kondo` directory.
+`.clj-kondo` directory. For leiningen, replace `clojure -Spath` with `lein
+classpath`.
 
 It is fine to check those configurations into source control if you want to, so
 everyone who is linting your code with clj-kondo, will get to see the same
