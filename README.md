@@ -10,7 +10,7 @@ library is available in the `rum/rum` library.
 
 The configuration dependency on Clojars follows a similar scheme:
 
-```
+``` clojure
 {:deps {io.github.clj-kondo/config-<org>-<lib> {:mvn/version "<version>"}}}
 ```
 
