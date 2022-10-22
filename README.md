@@ -2,6 +2,30 @@
 
 Clj-kondo configurations for libraries, as dependencies.
 
+## Gettings configurations
+
+You can get configurations for your libraries, if they are available in this
+repo, by adding dependencies to your `deps.edn` or `project.clj`, e.g.:
+
+```
+{:deps {io.github.clj-kondo/config-rum-rum {:mvn/version "<version>"}}}
+```
+
+If you don't already have a `.clj-kondo` directory, create one.
+
+With the extra dependencies in place, you can run this:
+
+```
+$ clj-kondo --lint $(clojure -Spath) --dependencies --skip-lint --copy-configs
+```
+
+and clj-kondo will copy configurations from the dependencies to your local
+`.clj-kondo` directory.
+
+It is fine to check those configurations into source control if you want to, so
+everyone who is linting your code with clj-kondo, will get to see the same
+results.
+
 ## Naming scheme
 
 Libraries in this repository reflect coordinate names in
