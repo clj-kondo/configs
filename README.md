@@ -5,7 +5,8 @@ Clj-kondo configurations for libraries, as dependencies.
 ## Gettings configurations
 
 You can get configurations for your libraries, if they are available in this
-repo, by adding dependencies to your `deps.edn` or `project.clj`, e.g.:
+repo, by adding dependencies to your `deps.edn` or `project.clj`. E.g. to add a
+configuration for Rum:
 
 ```
 {:deps {io.github.clj-kondo/config-rum-rum {:mvn/version "<version>"}}}
