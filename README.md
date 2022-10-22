@@ -6,7 +6,7 @@ Clj-kondo configurations for libraries, as dependencies.
 
 Libraries in this repository reflect coordinate names in
 `deps.edn`. E.g. configuration for the [rum](https://github.com/tonsky/rum)
-library is available in the `rum/rum` library.
+library is available in the `configs/rum/rum` library.
 
 The configuration dependency on Clojars follows a similar scheme:
 
@@ -32,7 +32,7 @@ To include a configuration in your `deps.edn` as a git dependency:
 {:deps {io.github.clj-kondo/config-rum-rum
         {:git/url "https://github.com/clj-kondo/clj-kondo.configs"
          :git/sha "<sha>"
-         :deps/root "rum/rum"}}}
+         :deps/root "configs/rum/rum"}}}
 ```
 
 Replace `<sha>` with the actual SHA you want to use.
