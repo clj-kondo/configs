@@ -1,0 +1,2 @@
+{:config-paths ["../resources/clj-kondo.exports/bbatsov/clojure-style-guide-aliases"]
+ :linters {:consistent-alias {:level :warning}}}

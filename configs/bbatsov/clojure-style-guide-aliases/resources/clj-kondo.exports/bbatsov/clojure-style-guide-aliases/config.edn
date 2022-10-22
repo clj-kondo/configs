@@ -1,0 +1,22 @@
+{:linters
+ {:consistent-alias
+  {:aliases
+   {clojure.datafy datafy
+    clojure.edn edn
+    clojure.java.io io
+    clojure.math math
+    clojure.set set
+    clojure.walk walk
+    clojure.zip zip
+    clojure.core.async async
+    clojure.data.csv csv
+    clojure.data.xml xml
+    clojure.tools.cli cli
+    clojure.java.shell sh
+    clojure.pprint pp
+    clojure.spec.alpha s
+    clojure.string str
+    clojure.core.matrix mat
+    clojure.tools.logging log
+    clojure.core.protocols p
+    clojure.core.reducers r}}}}
