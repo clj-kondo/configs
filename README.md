@@ -21,6 +21,12 @@ configuration for Rum:
 {:deps {io.github.clj-kondo/config-rum-rum {:mvn/version "<version>"}}}
 ```
 
+To always get the newest version, you can use [neil](https://github.com/babashka/neil):
+
+```
+neil dep add io.github.clj-kondo/config-rum-rum
+```
+
 If you don't already have a `.clj-kondo` directory, create one.
 
 With the extra dependencies in place, you can run this:
