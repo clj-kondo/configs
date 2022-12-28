@@ -8,7 +8,8 @@
 (defn -main
   [& _]
   ;; future
-  (cp/future pool (println "Hi from future"))
+  (let [x 1]
+    (cp/future pool (println "Hi from future: " x)))
 
   ;; pdoseq
   (cp/pdoseq 8 [x coll]

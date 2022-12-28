@@ -7,12 +7,11 @@
   (fn [{:keys [:node]}]
     (let [[pool & body] (rest (:children node))
           new-node (api/list-node
-                    (list*
-                     (api/token-node token)
+                    [(api/token-node token)
                      (api/list-node
                       (list* (api/token-node 'do)
                              pool
-                             body))))]
+                             body))])]
       {:node (with-meta new-node
                (meta node))})))
 
