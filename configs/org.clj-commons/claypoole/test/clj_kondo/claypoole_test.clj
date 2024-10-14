@@ -1,12 +1,20 @@
-(ns claypoole-test
-  (:require
-   [com.climate.claypoole :as cp]))
+(ns clj-kondo.claypoole-test
+  (:require [clj-kondo.core :as clj-kondo]
+            [clojure.test :refer :all]
+            [com.climate.claypoole :as cp]))
+
+(deftest no-errors
+  (let [errors (->> (clj-kondo/run! {:lint ["test/clj_kondo/claypoole_test.clj"]
+                                     :cache false})
+                    :findings
+                    (filter #(= :error (:level %)))
+                    (mapv #(select-keys % [:row :type :level :message])))]
+    (is (empty? errors))))
 
 (def pool (cp/threadpool 8))
-(def coll [1 2 3])
+(def coll (range 10))
 
-(defn -main
-  [& _]
+(comment
   ;; future
   (let [x 1]
     (cp/future pool (println "Hi from future: " x)))
@@ -78,5 +86,4 @@
   (cp/upfor 8) ;; arity warning with correct location
 
   (let [x 8] ;; binding is used
-    (cp/upfor x [y coll] (println y)))
-  )
+    (cp/upfor x [y coll] (println y))))
