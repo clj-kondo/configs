@@ -12,6 +12,14 @@
                (list* (api/token-node 'let)
                       (api/vector-node [selector (api/token-node nil)])
                       exprs))]))
+          (seq? catchee-sexpr)
+          (api/list-node
+           (list* catch (api/token-node 'Exception) (api/token-node '_e#)
+                  (api/list-node
+                   (list (api/token-node 'fn)
+                         (api/vector-node [(api/token-node '%)])
+                         catchee))
+                  exprs))
           :else catch-node)))
 
 (defn try+ [{:keys [node]}]
@@ -39,6 +47,5 @@
                    (with-meta (api/list-node (list* (api/token-node 'try)
                                                     (concat body catches)))
                      (meta node))])]
-    ;; (prn (api/sexpr new-node))
     {:node new-node}))
 
