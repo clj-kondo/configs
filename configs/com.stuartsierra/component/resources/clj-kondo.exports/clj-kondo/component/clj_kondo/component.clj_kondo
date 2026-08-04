@@ -1,0 +1,54 @@
+(ns clj-kondo.component
+  (:require [clj-kondo.hooks-api :as api]))
+
+(defn reg-finding! [msg type node]
+  (let [{:keys [row end-row col end-col]} (meta node)]
+    (api/reg-finding! {:message msg
+                       :type type
+                       :row row
+                       :end-row end-row
+                       :col col
+                       :end-col end-col})))
+
+(defn system-map [{:keys [node]}]
+  (let [children (next (:children node))
+        pairs (partition 2 children)]
+    (cond
+      (and (= 1 (count children))
+           (api/map-node? (first children)))
+      (reg-finding! "Expected: key-val pairs, given: map"
+                    :type-mismatch
+                    (first children))
+      (odd? (count children))
+      (reg-finding! "system-map requires even number of forms" :syntax node)
+      :else
+      ;; initialize a map of {:key 0} for all component keys.
+      ;; when we doseq over the pairs, if a given key has been seen, error.
+      ;; we check for the presence of a key (regardless of value) when looking at
+      ;; dependencies too.
+      (let [components (->> pairs
+                            (map (comp api/sexpr first))
+                            (distinct)
+                            (map (fn [ks] [ks 0]))
+                            (into {})
+                            (atom))]
+        ;; check dependencies:
+        ;; for each pair, if the value is a (component/using ...) call,
+        ;; look at either the vector items or the map values, and 
+        (doseq [[k v] pairs
+                :let [ks (api/sexpr k)
+                      _ (if (pos? (get @components ks))
+                          (reg-finding! (str "Duplicate component defined: " ks) :component/duplicate-component k)
+                          (swap! components update ks inc))]
+                :when (api/list-node? v)
+                :let [{:keys [ns name]} (api/resolve {:name (api/sexpr (first (:children v)))
+                                                      :call true})]
+                :when (and (= 'com.stuartsierra.component ns)
+                           (= 'using name))
+                :let [dependencies (nth (:children v) 2)
+                      deps (if (api/vector-node? dependencies)
+                             (:children dependencies)
+                             (take-nth 2 (next (:children dependencies))))]
+                dep deps
+                :when (not (contains? @components (api/sexpr dep)))]
+          (reg-finding! (str "Unresolved component: " dep) :component/unresolved-component dep))))))
